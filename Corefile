@@ -1,0 +1,22 @@
+nip.io {
+    log            # enable query logs
+
+    template IN A {
+      match (^|[.-])(?P<a>[0-9]*)[.-](?P<b>[0-9]*)[.-](?P<c>[0-9]*)[.-](?P<d>[0-9]*)[.]nip.io[.]$
+      answer "{{ .Name }} 3600 IN A {{ .Group.a }}.{{ .Group.b }}.{{ .Group.c }}.{{ .Group.d }}"
+    }
+
+    template IN AAAA {
+    }
+}
+
+. {
+    log            # enable query logs
+    health         # health check
+
+    root /etc/coredns/zones
+    file  db.example.org  example.org
+    file  db.io           io
+
+    # forward . 8.8.8.8
+}

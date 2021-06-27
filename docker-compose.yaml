@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  coredns:
+    image: coredns/coredns:1.8.4
+    container_name: coredns
+    command: -conf /etc/coredns/Corefile -dns.port 53
+    # environment:
+    ports:
+      - '53:53'
+      - '53:53/udp'
+      # Health check
+      - '8080:8080'
+      # Promethues metrics
+      # - '9153:9153'
+    volumes:
+      - './Corefile:/etc/coredns/Corefile'
+      - './zones:/etc/coredns/zones'
