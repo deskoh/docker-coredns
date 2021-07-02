@@ -5,7 +5,15 @@ Runs [CoreDNS](https://coredns.io/) as a [nip.io-like wildcard DNS](https://nip.
 ## Quick Start
 
 ```sh
+# Run using docker-compose
 docker-compose up
+
+# Run using docker
+docker run --name coredns -d \
+  -v $(pwd)/zones:/etc/coredns/zones:ro \
+  -v $(pwd)/Corefile:/etc/coredns/Corefile:ro \
+  -p 53:53/udp -p 53:53 \
+  coredns/coredns:1.8.4 -conf /etc/coredns/Corefile
 ```
 
 ## Queries
